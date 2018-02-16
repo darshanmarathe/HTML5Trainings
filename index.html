@@ -8,13 +8,90 @@
     <title>Hotel sun and sand</title>
 </head>
 <body>
+    <h1>HTML 5 trainings</h1>
+    <hr>
+    
     <ul class="menu">
         <li class="menuItem"><a href="/">Home</a></li>
         <li class="menuItem"><a href="/About.html">About</a></li>
         <li class="menuItem"><a href="/contactus.html">Contact</a></li>
-        <li class="menuItem"><a href="/Rooms.html">Rooms</a></li>
+        <li class="menuItem"><a href="/storage.html">Rooms</a></li>
         <li class="menuItem"><a href="/Booknow.html">Book Now</a></li>
         <li class="menuItem"><a href="/Gallery.html">Gallery</a></li>
+        
+        
     </ul>
+    
+    <div id="demo">
+        Enter na
+        <input type="text" id="name">
+        Loading your location please accept the browser permission settings.
+    </div>
+    
+    <div id="session" style="color:red">
+        ajdkdk
+    </div>
+    
+    
+    <div id="mapholder">
+        Map to come here
+    </div>
+    
+    
+    <script>
+        var x = document.getElementById("demo");
+         var y = document.getElementById("session");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        
+        
+        function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude + 
+            "<br>Longitude: " + position.coords.longitude; 
+               var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+         var storedInfo =  localStorage.getItem("locations") ||  "";
+         
+         x.innerHTML = x.innerHTML + "<br>" + storedInfo;
+         storedInfo = storedInfo + "|" + latlon;
+         
+        y.innerHTML = y.innerHTML +  sessionStorage.locations;
+         
+         localStorage.setItem("locations" , storedInfo);
+         
+         
+         sessionStorage.locations = storedInfo;
+             var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyDMbR4izlbJDgLZc_cq4Qee1BQ44CynUhg";
+
+    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+
+
+
+             
+                     }
+        getLocation();
+</script>
 </body>
 </html>
